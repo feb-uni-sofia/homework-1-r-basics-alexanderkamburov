@@ -47,10 +47,24 @@ temperatures
 temperatures$xminFahrenheit <- xmin * 9/5 + 32
 temperatures
 
+# Alternatively
+
+temperaturses <- within(temperaturses, {
+  xminFahrenheit <- xmin * 9 / 5 + 32
+  # Note that names in the block are first resolved in the data.frame (temperatures)
+  # so the name refers to the _column_ xmin, not to the vector xmin that exists in the global
+  # environment
+})
+
 # i)
 onlyTheTemperatureMeasurementsInFahrenheit <- data.frame(
   measurements = temperatures$xminFahrenheit
 )
+
+# Better:
+
+temperaturesFahrenheit <- temperatures[, 'xminFahrenheit']
+temperaturesFahrenheit
 
 onlyTheTemperatureMeasurementsInFahrenheit
 
@@ -61,10 +75,19 @@ onlyTheTemperatureMeasurementsInFahrenheitMonFri <- data.frame(
 )
 onlyTheTemperatureMeasurementsInFahrenheitMonFri
 
+# Better, although with only one column the subsetting returns a vector, not a data.frame:
+
+temperaturesFahrenheitMonFri <- temperaturesFahrenheit[1:5, ]
+
 #   ii)
 onlyTheTemperatureMeasurementsInFahrenheitMonFriV2 <- data.frame(
   measurements = onlyTheTemperatureMeasurementsInFahrenheit[-(6:7), ]
 )
+
+# Better:
+temperaturesFahrenheit
+temperaturesFahrenheitMonFri <- temperaturesFahrenheit[-(6:7), ]
+temperaturesFahrenheitMonFri
 
 onlyTheTemperatureMeasurementsInFahrenheitMonFriV2
 

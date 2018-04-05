@@ -14,6 +14,15 @@ y <- c(1, 4)
 # automatically pads out vector y with 0's for the missing values.
 x - y
 
+# This is not correct. The result does not get padded with zeroes.
+# The shorter vector (here y) gets recycled, i.e.
+# x - y is equivalent to 
+
+x - rep(y, 2)
+# or
+c(4, 1, 1, 4) - c(1, 4, 1, 4)
+
+
 # d)
 s <- c(x, y)
 
